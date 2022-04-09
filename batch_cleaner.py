@@ -48,7 +48,12 @@ def photo_batch_cleaner(raw_photo_directory):
     #Get exif data tag no 36867 which is the date, for every image
     dates_str = [i._getexif()[36867] for i in images]
     #Create date objects from the list of dates
-    dates_object = [datetime.datetime.strptime(i, "%Y:%m:%d %H:%M:%S") for i in dates_str]
+    #dates_object = [datetime.datetime.strptime(i, "%Y:%m:%d %H:%M:%S") for i in dates_str]
+    for i in dates_str:
+        try:
+            datetime.datetime.strptime(i, "%Y:%m:%d %H:%M:%S")
+        except:
+            print(i)
     #Get the YYYY_mmm string from the date object
     year_month_str = [str(i.year) + '_' + i.strftime('%b') for i in dates_object]
     #Create the eventual dictionary by linking the pictures list and date list
